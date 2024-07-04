@@ -1,0 +1,10 @@
+services:
+  github_sync:
+    container_name: github_sync
+    image: carnivuth/github_sync:latest
+    environment:
+      HEALTHCHECK: "healthchecks.io url"
+      ACCOUNT: "github username to fetch for backup"
+    volumes:
+      - "data folder:/var/lib/github_sync"
+      - "logs folder:/var/log/github_sync"
