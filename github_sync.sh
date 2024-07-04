@@ -8,8 +8,6 @@ DATA_DIR="/var/lib/github_sync"
 REPO_FILE="$DATA_DIR/git_repos"
 
 # LOG VARS
-LOG_DIR="/var/log/github_sync"
-LOG_FILE="$LOG_DIR/github_sync.log"
 GITHUB_SYNC_RESULT_FILE="$LOG_DIR/result"
 
 
@@ -24,22 +22,23 @@ fi
 echo "0" > "$GITHUB_SYNC_RESULT_FILE"
 
 # fetch github api
-curl "$API_URL" -o "$REPO_FILE" >> "$LOG_FILE" 2>&1 || echo "1" > "$GITHUB_SYNC_RESULT_FILE"
+curl "$API_URL" -o "$REPO_FILE" || echo "1" > "$GITHUB_SYNC_RESULT_FILE"
 
 # loop file and clone repos
 cat "$REPO_FILE" | jq -r '.[] | .clone_url + " " + .name' | while read URL NAME ; do
 
     cd "$DATA_DIR"
-    git clone "$URL" >> "$LOG_FILE" 2>&1
+    git clone "$URL" > /dev/null 2>&1 && echo "repo $NAME fresh cloned"
 
     # pull if already cloned
     if [[ "$?" != "0" ]]; then
-            (cd "$NAME" ; git pull >> "$LOG_FILE" || echo "1" > "$GITHUB_SYNC_RESULT_FILE" )
+            (cd "$NAME" ; git pull || echo "1" > "$GITHUB_SYNC_RESULT_FILE" )
+
     fi
 
 done
 
 # curl healthchek.io
 if [[ "$(cat "$GITHUB_SYNC_RESULT_FILE")" == "0" ]]; then
-    curl "$HEALTHCHECK" >> "$LOG_FILE" 2>&1
+    curl "$HEALTHCHECK"
 fi

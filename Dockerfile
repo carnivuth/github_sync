@@ -4,14 +4,16 @@ RUN apt update
 
 # install cron and crontab
 RUN apt install cron -y
-ADD crontab /etc/cron.d/
+ADD crontab /etc/
 # set permissions
-RUN chmod 0644 /etc/cron.d/crontab
+RUN chmod 600 /etc/crontab
+RUN chown root:root /etc/crontab
 
 # add project files
 WORKDIR /usr/local/bin
 ADD github_sync.sh .
 ADD deps .
+ADD start.sh .
 RUN apt install $(cat deps) -y
 
-CMD ["cron", "-f", "&&", "tail", "-f", "/var/log/cron.log"]
+CMD [ "./start.sh" ]

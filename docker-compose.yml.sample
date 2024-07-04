@@ -7,4 +7,3 @@ services:
       ACCOUNT: "github username to fetch for backup"
     volumes:
       - "data folder:/var/lib/github_sync"
-      - "logs folder:/var/log/github_sync"

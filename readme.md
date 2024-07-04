@@ -28,7 +28,6 @@ also a mount for the data and log folder are required
 ```docker-compose
 volumes:
   - "data folder:/var/lib/github_sync"
-  - "logs folder:/var/log/github_sync"
 ```
 
 ## INSTALLATION
