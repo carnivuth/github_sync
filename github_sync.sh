@@ -11,6 +11,15 @@ REPO_FILE="$DATA_DIR/git_repos"
 GITHUB_SYNC_RESULT_FILE="$LOG_DIR/result"
 
 
+notify(){
+  if [[ "$HEALTHCHECK" != "" ]]; then
+      curl "$HEALTHCHECK"
+  fi
+  if [[ "$NTFY" != "" ]]; then
+      curl "$NTFY" -X POST -d 'done backup of git repos'
+  fi
+}
+
 if [[ ! -d "$DATA_DIR" ]]; then
     mkdir -p "$DATA_DIR"
 fi
@@ -38,7 +47,7 @@ cat "$REPO_FILE" | jq -r '.[] | .clone_url + " " + .name' | while read URL NAME 
 
 done
 
-# curl healthchek.io
+# run notify action
 if [[ "$(cat "$GITHUB_SYNC_RESULT_FILE")" == "0" ]]; then
-    curl "$HEALTHCHECK"
+    notify
 fi

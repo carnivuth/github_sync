@@ -4,6 +4,7 @@ services:
     image: carnivuth/github_sync:latest
     environment:
       HEALTHCHECK: "healthchecks.io url"
+      NTFY: "ntfy url"
       ACCOUNT: "github username to fetch for backup"
     volumes:
       - "data folder:/var/lib/github_sync"
