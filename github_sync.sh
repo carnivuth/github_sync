@@ -8,6 +8,7 @@ DATA_DIR="/var/lib/github_sync"
 REPO_FILE="$DATA_DIR/git_repos"
 
 # LOG VARS
+LOG_DIR="/var/log/github_sync"
 GITHUB_SYNC_RESULT_FILE="$LOG_DIR/result"
 
 
