@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # github api
-API_URL="https://api.github.com/users/$ACCOUNT/repos"
+API_URL="https://api.github.com/users/$ACCOUNT/repos?per_page=100"
 
 # DATA VARS
 DATA_DIR="/var/lib/github_sync"
