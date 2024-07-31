@@ -17,7 +17,9 @@ notify(){
       curl "$HEALTHCHECK"
   fi
   if [[ "$NTFY" != "" ]]; then
-      curl "$NTFY" -X POST -d 'done backup of git repos'
+      curl "$NTFY" -X POST \
+              -H "Title: github_sync" \
+              -d 'done backup of git repos'
   fi
 }
 
