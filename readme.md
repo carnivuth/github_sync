@@ -16,20 +16,6 @@ and this abomination was born :)
 
 The script runs as a cron job, it fetches the github api to download the list of public repos and downloads them, then it curls the configured monitoring api.
 
-In order to work the following env vars must be set inside container
-
-```bash
-HEALTHCHECK: "healthchecks.io url"
-NTFY: "ntfy url"
-ACCOUNT: "github username to fetch for backup"
-```
-
-also a mount for the data folder is required
-
-```docker-compose
-volumes:
-  - "data folder:/var/lib/github_sync"
-```
 
 ## INSTALLATION
 

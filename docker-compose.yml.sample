@@ -7,4 +7,7 @@ services:
       NTFY: "ntfy url"
       ACCOUNT: "github username to fetch for backup"
     volumes:
-      - "data folder:/var/lib/github_sync"
+      - "<data folder>:/var/lib/github_sync"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+
